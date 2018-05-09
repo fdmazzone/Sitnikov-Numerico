@@ -1,0 +1,40 @@
+r
+whos()
+r,T=Func_r(.1)
+using Interpolations
+r,T=Func_r(.1)
+r(8)
+r(8)
+using DifferentialEquations
+using PyPlot
+t=0:.1:T
+r_v=sol.(t);
+plot(t,r_v)
+r_v=sol.(t);
+plot(t,r_v)
+r_v=sol.(t);
+plot(t,r_v)
+plot(t,r_v)
+open("test_pert.txt") do f
+close(f)
+2+2
+include("Solve2body.jl")
+using DifferentialEquations
+r,T=Func_r(.1) 
+r,T=Func_r(.1) 
+using Interpolations
+r,T=Func_r(.1) 
+whos() 
+t=0:.1:100*T;
+ z=sol.(t);
+Data=Array{Float64}(length(t),3);
+Data(:,3)=t;
+Data[:,3]=t;
+Data[:,3]=t;Data[:,1]=[a[1] for a in z];Data[:,2]=[a[2] for a in z];
+writedlm("test_TanYam7.txt",Data,',');
+Data[:,3]=t;Data[:,1]=[a[1] for a in z];Data[:,2]=[a[2] for a in z];writedlm("test_DP8.txt",Data,',');
+z=sol.(t);Data[:,3]=t;Data[:,1]=[a[1] for a in z];Data[:,2]=[a[2] for a in z];
+z=sol.(t);Data[:,3]=t;Data[:,1]=[a[1] for a in z];Data[:,2]=[a[2] for a in z];writedlm("test_DP8.txt",Data,',');
+z=sol.(t);Data[:,3]=t;Data[:,1]=[a[1] for a in z];Data[:,2]=[a[2] for a in z];writedlm("test_DP81e-7.txt",Data,',');
+z=sol.(t);Data[:,3]=t;Data[:,1]=[a[1] for a in z];Data[:,2]=[a[2] for a in z];writedlm("test_DP81e-9.txt",Data,',');
+z=sol.(t);Data[:,3]=t;Data[:,1]=[a[1] for a in z];Data[:,2]=[a[2] for a in z];writedlm("test_DP81e-12.txt",Data,',');
