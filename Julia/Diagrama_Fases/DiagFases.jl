@@ -1,4 +1,6 @@
-""" Requiere crear la función r con Func_r del archivo Solve2body.jl"""
+""" Requiere crear la función r con Func_r del archivo Solve2body.jl
+    using DiferentialEquations
+"""
 m=[.5,.5];
 s=[-.5,.5];
 function Fuerza3c(du,u,p,t)
@@ -13,8 +15,9 @@ z₀=1
 u0 = [z₀,0.0]
 tspan = (0.0,100*T)
 prob_ode_trescuerpos = ODEProblem(Fuerza3c,u0,tspan,[m,s,r]);
-alg =  OwrenZen5()
-sol = solve(prob_ode_trescuerpos,alg);
+alg =  ddeabm()
+
+sol = solve(prob_ode_trescuerpos,alg,dt=.0001);
 print("Fin")
 
 """
