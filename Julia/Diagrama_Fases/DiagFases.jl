@@ -1,3 +1,4 @@
+""" Requiere crear la función r con Func_r del archivo Solve2body.jl"""
 m=[.5,.5];
 s=[-.5,.5];
 function Fuerza3c(du,u,p,t)
@@ -12,7 +13,10 @@ z₀=1
 u0 = [z₀,0.0]
 tspan = (0.0,100*T)
 prob_ode_trescuerpos = ODEProblem(Fuerza3c,u0,tspan,[m,s,r]);
-alg =  ARKODE(order=8)
+alg =  OwrenZen5()
 sol = solve(prob_ode_trescuerpos,alg);
 print("Fin")
 
+"""
+t=0:.1:100*T;z=sol.(t);Data=Array{Float64}(length(t),3);Data[:,1]=[a[1] for a in z];Data[:,2]=[a[2] for a in z];Data[:,3]=t;writedlm("test_OwrenZen5.txt",Data,',')
+"""

@@ -23,7 +23,7 @@ funcion=@fuerza_nb;
 %%%Colocacion
 Integrador=@colocacion_nb_adap; 
 parametros_Integrador.paso=.001;
-parametros_Integrador.tol=1e-27;
+parametros_Integrador.tol=1e-20;
 parametros_Integrador.orden=12;
 parametros_Integrador.iter=3;
 
