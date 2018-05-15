@@ -1,4 +1,29 @@
-function collocation2(f::Function,p, t::Array{Float64},z₀::Array{Float64},v₀::Array{Float64},t₀::Float64; dt=1e-3,order=12,iter=3,tol=1e-20,dtmin=0,dtmax=Inf)
+"""
+Implement the method collocation adaptativa for solve system of second order
+differential equations  x''(t)=f(t,x(t)) (poner cita).
+Usage
+======
+collocation2(f,p, t,z₀,v₀,t₀; dt=ddd,order=n,iter=3,tol=eps,dtmin=xxx,dtmax=yyy)
+
+f function defined the system arguments t, x. t is a vector (column) and x a 2d array
+(Matrix). The j-row correpond to the value of x in t[j].
+p: parameter for function
+t: vector of times where we want to find the solutions must to be t₀<=t[1],
+z₀: initial z(t₀)
+v₀: z'(t₀)
+t₀: initial time
+
+optional argeuments
+===================
+dt: size initial step
+order: the orden method (6-10)
+tol=eps: tolerance (order=8 tol=1e-19)
+dtmin= minimum step
+dtmax=maximun step
+
+"""
+
+function collocation(f::Function,p, t::Array{Float64},z₀::Array{Float64},v₀::Array{Float64},t₀::Float64; dt=1e-3,order=10,iter=3,tol=1e-19,dtmin=0,dtmax=Inf)
     @assert(t₀<=t[1],"t₀ must does no to be less than t[1] ")
 
 
@@ -88,7 +113,9 @@ function collocation2(f::Function,p, t::Array{Float64},z₀::Array{Float64},v₀
         t₀_pas=t₀
         t₀=t₁
         t₁=t₁+dt
+
         tₚ=collect(t₀:dt/(n-2):t₁)
+
         MV1=(n-2)+r*collect(0:(n-2))
 
         MV=repmat(MV1,1,order-1).^exponentes;
@@ -114,6 +141,7 @@ function collocation2(f::Function,p, t::Array{Float64},z₀::Array{Float64},v₀
         k_aux=length(t_aux)
 
         if k_aux>0
+
             Z1=repmat(z₀,k_aux,1)+(t_aux-t₀)*v₀
             Z2=dt^2*taylor((order-2)*dt^-1*(t_aux-t₀),order,2)
             Z3=diagm(vec(matriz_epoca[1,:]))*C
@@ -122,7 +150,7 @@ function collocation2(f::Function,p, t::Array{Float64},z₀::Array{Float64},v₀
             V1=repmat(v₀,k_aux,1)
             V2=dt*taylor((order-2)*dt^-1*(t_aux-t₀),order,1);
             V3=diagm(vec(matriz_epoca_vel))*C
-            v[ind_out:ind_out+k_aux-1,:]=V1+V2*V3
+	        v[ind_out:ind_out+k_aux-1,:]=V1+V2*V3
         end
 
         ind_out=ind_out+k_aux
