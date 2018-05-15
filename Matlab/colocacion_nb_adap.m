@@ -68,7 +68,6 @@ j=(0:orden-2)';
 matriz_epoca=(orden-2)^(-2)./repmat(l.*(l-1),[orden-1,1]);
 matriz_epocas_escala=matriz_epoca.*(repmat(j,[1,orden-1]).^exponentes);
 matriz_velocidad=[(orden-2).^(0:orden-2)]./(1:orden-1);
-matriz_epoca_fila=(orden-2)^(-2)./((2:orden).*((2:orden)-1));
 matriz_epoca_vel=(orden-2)^(-1)./((2:orden)-1);
 
 
@@ -116,7 +115,7 @@ if ~isempty(Indices)
     
     posicion_out(indice_out:indice_out+length(Indices)-1,:)=ones(length(Indices),1)*posicion...
         +(efemerides_epocas(Indices)-colocacion_epocas_ini)*velocidad...
-         +delta_t^2*monomios_taylor((orden-2)*delta_t^(-1)*(efemerides_epocas(Indices)-colocacion_epocas_ini),orden,2)*diag(matriz_epoca_fila)*C;
+         +delta_t^2*monomios_taylor((orden-2)*delta_t^(-1)*(efemerides_epocas(Indices)-colocacion_epocas_ini),orden,2)*diag(matriz_epoca(1,:))*C;
 
      velocidad_out(indice_out:indice_out+length(Indices)-1,:)=ones(length(Indices),1)*velocidad...
          +delta_t*monomios_taylor((orden-2)*delta_t^(-1)*(efemerides_epocas(Indices)-colocacion_epocas_ini),orden,1)*diag(matriz_epoca_vel)*C;
@@ -190,7 +189,7 @@ while indice_out<=cant
         %efmerides_epocas_aux=efemerides_epocas(Indices);
         posicion_out(indice_out:indice_out+length(Indices)-1,:)=ones(length(Indices),1)*posicion...
             +(efemerides_epocas(Indices)-colocacion_epocas_ini)*velocidad...
-            +delta_t^2*monomios_taylor((orden-2)*delta_t^(-1)*(efemerides_epocas(Indices)-colocacion_epocas_ini),orden,2)*diag(matriz_epoca_fila)*C;
+            +delta_t^2*monomios_taylor((orden-2)*delta_t^(-1)*(efemerides_epocas(Indices)-colocacion_epocas_ini),orden,2)*diag(matriz_epoca(1,:))*C;
 
         velocidad_out(indice_out:indice_out+length(Indices)-1,:)=ones(length(Indices),1)*velocidad...
             +delta_t*monomios_taylor((orden-2)*delta_t^(-1)*(efemerides_epocas(Indices)-colocacion_epocas_ini),orden,1)*diag(matriz_epoca_vel)*C;
@@ -225,5 +224,6 @@ end%fin funcion principal
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
 
 function taylor=monomios_taylor(t,orden,exp_ini)
+
     taylor=repmat(t,[1,orden-1]).^repmat(exp_ini:orden-(2-exp_ini),[length(t),1]);
 end

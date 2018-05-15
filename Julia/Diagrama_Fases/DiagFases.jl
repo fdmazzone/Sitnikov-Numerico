@@ -13,11 +13,11 @@ function Fuerza3c(du,u,p,t)
     du[1] = u[2]
     du[2] = -sum(m./R*u[1])
 end
-z₀=1
-u0 = [z₀,0.0]
-tspan = (0.0,100*T)
+#z₀=1
+u0 = [1,0.0]
+tspan = (0.0,10*T)
 prob_ode_trescuerpos = ODEProblem(Fuerza3c,u0,tspan,[m,s,r]);
-alg =  ARKODE(order=8)
+alg =  RK()
 sol = solve(prob_ode_trescuerpos,alg);
 
 
@@ -27,4 +27,3 @@ sol = solve(prob_ode_trescuerpos,alg);
 """
 t=0:.1:100*T;z=sol.(t);Data=Array{Float64}(length(t),3);Data[:,1]=[a[1] for a in z];Data[:,2]=[a[2] for a in z];Data[:,3]=t;writedlm("test_OwrenZen5.txt",Data,',')
 """
-
