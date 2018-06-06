@@ -20,10 +20,11 @@ order: the orden method (6-10)
 tol=eps: tolerance (order=8 tol=1e-19)
 dtmin= minimum step
 dtmax=maximun step
+message= message in progress bar
 
 """
 
-function collocation(f::Function,p, t::Array{Float64},z₀::Array{Float64},v₀::Array{Float64},t₀::Float64; dt=1e-3,order=10,iter=3,tol=1e-19,dtmin=0,dtmax=Inf)
+function collocation(f::Function,p, t::Array{Float64},z₀::Array{Float64},v₀::Array{Float64},t₀::Float64; dt=1e-3,order=10,iter=3,tol=1e-19,dtmin=0,dtmax=Inf,message="")
     @assert(t₀<=t[1],"t₀ must does no to be less than t[1] ")
 
 
@@ -33,7 +34,7 @@ function collocation(f::Function,p, t::Array{Float64},z₀::Array{Float64},v₀:
     v=zeros(t_len,z_len);
     ind_out=1; #Number of t solved
 
-    ProBar = Progress(t_len, 1)
+    ProBar = Progress(t_len, 1,message)
 
 
     # Precomputing certain matrix
