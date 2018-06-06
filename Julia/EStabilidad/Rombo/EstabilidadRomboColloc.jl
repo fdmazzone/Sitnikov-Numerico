@@ -36,7 +36,7 @@ function EstabilidadRombo(λ,z₀)
     #   a₁[i],a₂[i],T[i],Δ[i]=CoefEstRombo(m,s,v[i])
     # end
     # return (a₁,a₂,T,Δ)
-    return a₁,a₂,T,Δ
+    return γ
 end
 
 
@@ -62,7 +62,7 @@ function VariationalSystem(z₀)
         return y[:]'
     end
 
-    return VarFor
+   return VarFor
 end
 
 
@@ -74,7 +74,8 @@ end
  function CoefEstRombo(z₀)
 
 
-      VarFor=VariationalSystem(z₀)                                                                                                                                                                                                                                                                                       
+      VarFor=VariationalSystem(z₀)                                                                                                                                                                                                                                                         
+
 #
 #
 #     #
