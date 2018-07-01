@@ -26,8 +26,6 @@ message= message in progress bar
 
 function collocation(f::Function,p, t::Array{Float64},z₀::Array{Float64},v₀::Array{Float64},t₀::Float64; dt=1e-3,order=10,iter=3,tol=1e-19,dtmin=0,dtmax=Inf,message="")
     @assert(t₀<=t[1],"t₀ must does no to be less than t[1] ")
-
-
     t_len=length(t);
     z_len=size(z₀,2)
     z=zeros(t_len,z_len)
