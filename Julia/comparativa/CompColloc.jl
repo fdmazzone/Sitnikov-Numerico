@@ -9,7 +9,7 @@ s=[-.5 .5];
 function ForceSit(t,z,r)
 
     return -(z.^2.+r.^2*s.^2 ).^(-1.5)*m.*z
-
+    #return -(z.^2.+r.(t).^2*s.^2 ).^(-1.5)*m.*z
 end
 
 z₀=Array{Float64,2}(1,1)
