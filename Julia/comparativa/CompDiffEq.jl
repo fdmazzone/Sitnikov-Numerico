@@ -2,7 +2,7 @@
 ### Requiere crear la función r con Func_r del archivo Solve2body.jl
 ###    using DiferentialEquations
 ###
-include("Solve2body.jl")
+#include("Solve2body.jl")
 
 #r,T=Func_r(0.0)
 r=1.0
@@ -23,8 +23,8 @@ end
 u0 = [1,0.0]
 tspan = (0.0,1000*T)
 prob_ode_trescuerpos = ODEProblem(Fuerza3c,u0,tspan,[m,s,r]);
-alg =   VCAB3()
-sol = solve(prob_ode_trescuerpos,alg,dt=1e-3,progress=true, abstol = 1e-12, reltol = 1e-12);
+alg =   Tsit5()
+sol = solve(prob_ode_trescuerpos,alg,dt=1e-3,progress=true, abstol = 1e-11, reltol = 1e-11);
 
-t=0:.1:1000*T;z=sol.(t);Data=Array{Float64}(length(t),3);Data[:,1]=[a[1] for a in z];Data[:,2]=[a[2] for a in z];Data[:,3]=t;writedlm("ADM54-dt1e-3-reltol-abstol-1e-12.txt",Data,',')
+t=0:.1:1000*T;z=sol.(t);Data=Array{Float64}(length(t),3);Data[:,1]=[a[1] for a in z];Data[:,2]=[a[2] for a in z];Data[:,3]=t;writedlm("Tsit5-1e-11.txt",Data,',')
 
