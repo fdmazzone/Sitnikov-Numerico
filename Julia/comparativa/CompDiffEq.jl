@@ -23,8 +23,7 @@ end
 u0 = [1,0.0]
 tspan = (0.0,1000*T)
 prob_ode_trescuerpos = ODEProblem(Fuerza3c,u0,tspan,[m,s,r]);
-alg =   Tsit5()
-sol = solve(prob_ode_trescuerpos,alg,dt=1e-3,progress=true, abstol = 1e-11, reltol = 1e-11);
+alg =   DP8()
+sol = solve(prob_ode_trescuerpos,alg,dt=1e-3,progress=true, abstol = 1e-14, reltol = 1e-14);
 
-t=0:.1:1000*T;z=sol.(t);Data=Array{Float64}(length(t),3);Data[:,1]=[a[1] for a in z];Data[:,2]=[a[2] for a in z];Data[:,3]=t;writedlm("Tsit5-1e-11.txt",Data,',')
-
+t=0:.1:1000*T;z=sol.(t);Data=Array{Float64}(length(t),3);Data[:,1]=[a[1] for a in z];Data[:,2]=[a[2] for a in z];Data[:,3]=t;writedlm("Dp8-1e-14.txt",Data,',')
