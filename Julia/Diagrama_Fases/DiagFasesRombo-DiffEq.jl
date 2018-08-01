@@ -1,11 +1,11 @@
 
 λ=1.3
-e=.2
+e=.1
 #e_lista=.0:.05:.5
 #size_e=length(e_lista)
-#v0_lista=collect(linspace(3.614,3.626,10));
-#size_v0s=length(v0_lista)
-z0_lista=collect((1:.02:5));
+v0_lista=collect(linspace(3.623450,3.623650,10));
+size_v0s=length(v0_lista)
+z0_lista=collect(linspace(-.003,.003,10));
 size_z0s=length(z0_lista)
 
 m₂=4*(1+λ^2)^(3/2)*(8*λ^3-(1+λ^2)^(3/2))/(64*λ^3-(1+λ^2)^3)
@@ -28,11 +28,11 @@ end
 
 
 t₀=0.0
-CantPer=1000
-#z=Array{Float64}(CantPer+1,size_z0s,size_v0s)
-#v=Array{Float64}(CantPer+1,size_z0s,size_v0s)
-z=Array{Float64}(CantPer+1,size_z0s)
-v=Array{Float64}(CantPer+1,size_z0s)
+CantPer=2000
+z=Array{Float64}(CantPer+1,size_z0s,size_v0s)
+v=Array{Float64}(CantPer+1,size_z0s,size_v0s)
+#z=Array{Float64}(CantPer+1,size_z0s)
+#v=Array{Float64}(CantPer+1,size_z0s)
 control=-1
 
 Cont=1
@@ -41,26 +41,26 @@ Cont=1
 	tspan = (0.0,CantPer*T);
     alg =  Vern9()
     t=0:T:CantPer*T;
-    ProBar= Progress(size_z0s, 1)
-    #ProBar= Progress(size_z0s*size_v0s, 1)
-    #for i ∈ 1:size_v0s
+    #ProBar= Progress(size_z0s, 1)
+    ProBar= Progress(size_z0s*size_v0s, 1)
+    for i ∈ 1:size_v0s
     	for j ∈ 1:size_z0s
     		control=-control
-    		u0=[control*z0_lista[j],0.0]
-            #u0=[z0_lista[j],v0_lista[i]]
+    		#u0=[control*z0_lista[j],0.0]
+            u0=[z0_lista[j],v0_lista[i]]
     		Cont=Cont+1
     		#msj=string("e=",e_lista[j_e],", z₀ =",z₀[1,1], ", Total= ",total, "%, Integrador= ")
     		prob_ode_trescuerpos = ODEProblem(Fuerza3c,u0,tspan,[m,s,r]);
 
     		sol = solve(prob_ode_trescuerpos,alg,dt=1e-3, progress=true,abstol = 1e-12, reltol = 1e-12);
 
-            zz=sol.(t);z[:,j]=[a[1] for a in zz];v[:,j]=[a[2] for a in zz];
-            update!(ProBar,j)
-    		#zz=sol.(t);z[:,j,i]=[a[1] for a in zz];v[:,j,i]=[a[2] for a in zz];
-            #update!(ProBar,j*i)
+            #zz=sol.(t);z[:,j]=[a[1] for a in zz];v[:,j]=[a[2] for a in zz];
+            #update!(ProBar,j)
+    		zz=sol.(t);z[:,j,i]=[a[1] for a in zz];v[:,j,i]=[a[2] for a in zz];
+            update!(ProBar,j+(i-1)*10)
     	end
     end
-	file=string("FasesRombo-e-.2.jld")
+	file=string("FasesRombo-e-.1.Zoom-zona-res-ines-1-1.jld")
 	save(file,"z",z,"v",v,"e",e,"z₀",z0_lista,"T",T)
 
 #end
