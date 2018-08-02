@@ -1,48 +1,47 @@
 
 #Requiere using PyPlot, y Estabilidad-n-colineales.jl
-#El input de esta función es un vector X de posiciones de los primarios intermedios.
-#[-1 -x_j  x_j 1]
+# Las posiciones de los cuatro primarios son [-1 -x_j  x_j 1]. Se debe ingresar un vector con los valores x_j
 #v=vector de posiciones iniciales de la partículo no grave.
 
 function MapaEstabilidad4C(x,v)
-#x=linspace(0.01,0.41,50)
-#v=linspace(50,60,50)
-l=size(v)[1]
-k=size(x)[1]
-
-
+l=length(v)
+k=length(x)
+include("/home/fernando/fer/Investigación/Trabajo en curso/Mecanica Celeste/Julia/EStabilidad/Estabilidad-n-colineales.jl")
+include("/home/fernando/fer/Investigación/Trabajo en curso/Mecanica Celeste/Julia/EStabilidad/HallaMasas.jl")
 cc=Array{Bool}(l,k)
 A₁=Array{Complex{Float64}}(l,k)
 A₂=Array{Complex{Float64}}(l,k)
-
+T=Array{Float64}(l,k)
+ProBar= Progress(k, 1)
 for j in 1:k
-    print(j/k*100,"% de avance")
     m=ColinealInv([-1 -x[j]  x[j] 1])
-
-
-    (a₁,a₂,T,Δ)=Estabilidad(m[3:4],[x[j] 1], v)
+    (a₁,a₂,t,Δ)=Estabilidad(m[3:4],[x[j] 1], v)
     cc[:,j]=isreal.(Δ).*(abs.(a₁).<=2).*(abs.(a₂).<=2)
     A₁[:,j]=a₁
     A₂[:,j]=a₂
+    T[:,j]=t
+    update!(ProBar,j)
 end
-
-print(size(x))
-
-print(size(v))
 
 
 xgrid=repmat(x',l,1);
 vgrid = repmat(v,1,k);
 
-
 xestable=xgrid[cc];
-vestable=vgrid[cc] ;
+zestable=vgrid[cc] ;
 
+
+
+file=string("Est4C","Vern9.jld")
+
+save( file,"x",x,"z₀",v,"xestable",xestable,"zestable",zestable,"a1",A₁,"a2",A₂,"T",T)
+
+
+return xestable, zestable,A₁,A₂
+end
 
 #fig, ax=subplots()
 #ax[:scatter](xestable,vestable,color="black", marker=:.)
 #xlabel(L"x")
 #ylabel(L"z(0)")
 #title("Stability Map")
-return xestable, vestable,A₁,A₂
-end

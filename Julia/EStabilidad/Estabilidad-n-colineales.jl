@@ -75,7 +75,7 @@ f(z)=1/sqrt(E+2sum(m./sqrt.(s.^2+z^2)))
 
   prob_ode_trescuerpos = ODEProblem(Fuerza3c,u0,tspan,[m,s])
     alg= Vern9();
-  sol = solve(prob_ode_trescuerpos,alg)
+  sol = solve(prob_ode_trescuerpos,alg,abstol = 1e-12, reltol = 1e-12)
   #Matríz Variacional
 
   Φ(t)=s.^2+(sol(t)[1])^2
@@ -94,7 +94,7 @@ F₁(t)=F₂(t)+6*sum(m.*(s.^2.*Φ(t).^(-2.5)))
 
 
   prob_ode_variacional = ODEProblem(variacional,u1,tspan)
-  so_var = solve(prob_ode_variacional,alg)
+  so_var = solve(prob_ode_variacional,alg,abstol = 1e-12, reltol = 1e-12)
   #Matríz monodromía
 
 

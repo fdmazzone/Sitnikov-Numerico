@@ -3,9 +3,9 @@
 e=.1
 #e_lista=.0:.05:.5
 #size_e=length(e_lista)
-v0_lista=collect(linspace(3.623450,3.623650,10));
+v0_lista=collect(linspace(-.1,.1,10));
 size_v0s=length(v0_lista)
-z0_lista=collect(linspace(-.003,.003,10));
+z0_lista=collect(linspace(5.80,6.1,10));
 size_z0s=length(z0_lista)
 
 m₂=4*(1+λ^2)^(3/2)*(8*λ^3-(1+λ^2)^(3/2))/(64*λ^3-(1+λ^2)^3)
@@ -60,7 +60,7 @@ Cont=1
             update!(ProBar,j+(i-1)*10)
     	end
     end
-	file=string("FasesRombo-e-.1.Zoom-zona-res-ines-1-1.jld")
+	file=string("FasesRombo-e-.1_res-es-1:10-II.jld")
 	save(file,"z",z,"v",v,"e",e,"z₀",z0_lista,"T",T)
 
 #end

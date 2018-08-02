@@ -49,7 +49,7 @@ T= T₀[1]/2^.5
 
 	prob_ode_trescuerpos = ODEProblem(Fuerza3c,u0,tspan,[m,s])
 	alg =  Vern9()
-	sol = solve(prob_ode_trescuerpos, alg)
+	sol = solve(prob_ode_trescuerpos, alg,abstol = 1e-12, reltol = 1e-12)
 
   #Matríz Variacional
 
@@ -65,7 +65,7 @@ T= T₀[1]/2^.5
   variacional(u,p,t)=A(t)*u
 
   prob_ode_variacional = ODEProblem(variacional,u1,tspan)
-  so_var = solve(prob_ode_variacional, alg)
+  so_var = solve(prob_ode_variacional, alg,abstol = 1e-12, reltol = 1e-12)
 
   #Matríz monodromía
   G=(M*inv(so_var(T))*M*so_var(T))^2
