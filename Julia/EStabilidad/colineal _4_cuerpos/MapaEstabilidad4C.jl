@@ -11,7 +11,7 @@ include("/home/fernando/fer/Investigación/Trabajo en curso/Mecanica Celeste/Jul
 cc=Array{Bool}(l,k)
 A₁=Array{Complex{Float64}}(l,k)
 A₂=Array{Complex{Float64}}(l,k)
-T=Array{Float64}(l,k)
+T=Array{Any}(l,k)
 ProBar= Progress(k, 1)
 for j in 1:k
     m=ColinealInv([-1 -x[j]  x[j] 1])
