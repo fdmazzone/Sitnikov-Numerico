@@ -3,9 +3,9 @@
 e=.1
 #e_lista=.0:.05:.5
 #size_e=length(e_lista)
-v0_lista=collect(linspace(-.1,.1,10));
+v0_lista=collect(linspace(-0.035,.04,10));
 size_v0s=length(v0_lista)
-z0_lista=collect(linspace(5.80,6.1,10));
+z0_lista=collect(linspace(5.78,5.83,10));
 size_z0s=length(z0_lista)
 
 m₂=4*(1+λ^2)^(3/2)*(8*λ^3-(1+λ^2)^(3/2))/(64*λ^3-(1+λ^2)^3)
@@ -33,7 +33,7 @@ z=Array{Float64}(CantPer+1,size_z0s,size_v0s)
 v=Array{Float64}(CantPer+1,size_z0s,size_v0s)
 #z=Array{Float64}(CantPer+1,size_z0s)
 #v=Array{Float64}(CantPer+1,size_z0s)
-control=-1
+#control=-1
 
 Cont=1
 #for j_e in 1:size_e
@@ -45,7 +45,7 @@ Cont=1
     ProBar= Progress(size_z0s*size_v0s, 1)
     for i ∈ 1:size_v0s
     	for j ∈ 1:size_z0s
-    		control=-control
+    		#control=-control
     		#u0=[control*z0_lista[j],0.0]
             u0=[z0_lista[j],v0_lista[i]]
     		Cont=Cont+1
