@@ -21,7 +21,7 @@ function FasesRombo(λ,e,v0_lista,z0_lista,CantPer,nombre_arch)
 
 
 
-    include("Solve2body.jl")
+   
 
     function Fuerza3c(du,u,p,t)
         m=p[1]
