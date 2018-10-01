@@ -7,6 +7,7 @@ camino2="/home/fernando/fer/Investigación/Trabajos GIT/Mecanica Celeste/Estabil
 #using StatsBase
 #include hallaMAsas.jl
 
+###Leemos los archivos de datos, son muchos uno por cada region de alturas
 for h in 1:7
     file=string(camino,h,".jld")
     Data=load(file)
@@ -14,7 +15,7 @@ for h in 1:7
     yest=Data["y"]
     zest=Data["z(0)"]
 
-
+    #no se que hace
     XY=[[xest[i],yest[i]] for i in 1:size(xest)[1]];
     ContXY = countmap(XY);
     b = hcat([[key, val] for (key, val) in ContXY]...)'
