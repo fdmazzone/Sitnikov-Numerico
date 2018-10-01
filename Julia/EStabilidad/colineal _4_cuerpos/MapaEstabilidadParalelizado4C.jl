@@ -1,13 +1,35 @@
+################################################################################
+#####       COMPUTA EL DDIAGRAMA DE ESTABILIDAD PARA 4 CUERPOS COLINEALES
+#####       COMPUTA EN PARALELO. LA VARIABLE "procesos" CONTIENE  LA CANTIDAD DE
+#####       PROCESOS EN PARALELO QUE SE EJECUTAN 
+################################################################################       
+
+
+
+#######################  Directorio de trabajo (CAMBIAR)#########################
+
 #cd("/home/fernando/fer/Investigación/Trabajo en curso/Mecanica #Celeste/Julia/EStabilidad/colineal _4_cuerpos")
 
-#procesos=7
-#addprocs(procesos-1)
+############## Cantidad de Procesos (CAMBIAR) ##################################
+#procesos=3
+#addprocs(procesos)
+
+################  REQUERIMIENTOS ###############################################
+################  OJO!!!  EL MODULO ProgressMeter ES UN FORK (VARIANTE) 
+################  DEL OFICIAL. ESTA HECHO PARA MOSTRAR COMPUTOS EN
+################  PARALELO. DIRECCIÓN WEB:
+################  https://github.com/adamslc/ProgressMeter.jl
+################################################################################
 
 @everywhere using DifferentialEquations, QuadGK, JLD, ProgressMeter
 #@everywhere include("MapaEstabilidad4C.jl")
 
 @everywhere include("/home/fernando/fer/Investigación/Trabajo en curso/Mecanica Celeste/Julia/EStabilidad/Estabilidad-n-colineales.jl")
 @everywhere include("/home/fernando/fer/Investigación/Trabajo en curso/Mecanica Celeste/Julia/EStabilidad/HallaMasas.jl")
+
+
+################    FUNCION QUE SE COMPUTA PROGRAMADA PARA ####################
+################    QUE SE PUEDA USAR EN PARALELO          ####################
 
 @everywhere function MapaEstabilidad4C(X,p=nothing)
     x=X[1]
@@ -35,8 +57,8 @@ end
 
 
 
-
-
+#################### GENERO DATOS PARA COMPUTO                       ########## 
+###################  AGRUPADOS DE ACUUERDO A LA CANTIDAD DE PROCESOS ##########
 
 
 xini=0.38
@@ -51,14 +73,8 @@ X=xini:Δx:xfin
 v=vini:Δv:vfin
 N=length(X)
 NxProc=Int64(floor(N/procesos))
-
 j_ini=1
 j_fin=NxProc
-
-
-
-
-
 M=Array{Any}(procesos)
 for i in 1:procesos
     x=X[j_ini:j_fin]
@@ -66,7 +82,14 @@ for i in 1:procesos
     j_ini=j_fin+1
     j_fin=j_fin+NxProc
 end
+
+
+#############  COMPUTO EN PARALELO #########################################
+
 c=ProgressMeter.pmap(MapaEstabilidad4C,M)
+
+
+############## GUARDO LOS DATOS ###########################################
 
 xestable=c[1][1]
 zestable=c[1][2]
@@ -85,15 +108,6 @@ end
 
 file=string("Est4C-Parale-Vern9.jld")
 save( file,"x",X,"z₀",v,"xestable",xestable,"zestable",zestable,"a1",a₁,"a2",a₂,"T",T)
-
-
-
-#Requiere using PyPlot, DifferentialEquations,  JLD, QuadGK
-#ProgressMeter
-#y Estabilidad-n-colineales.jl
-# Las posiciones de los cuatro primarios son [-1 -x_j  x_j 1]. Se debe #ingresar un vector con los valores x_j
-#v=vector de posiciones iniciales de la partículo no grave.
-
 
 
 
