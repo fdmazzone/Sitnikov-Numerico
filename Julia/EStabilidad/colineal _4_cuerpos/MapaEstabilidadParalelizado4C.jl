@@ -38,6 +38,7 @@ end
 
 
 
+
 xini=0.38
 #xfin=0.41
 xfin=.39
@@ -46,7 +47,7 @@ vfin=16
 #Δx=.0001
 Δx=.001
 X=xini:Δx:xfin
-Δv=.01
+Δv=.1
 v=vini:Δv:vfin
 N=length(X)
 NxProc=Int64(floor(N/procesos))
@@ -66,6 +67,24 @@ for i in 1:procesos
     j_fin=j_fin+NxProc
 end
 c=ProgressMeter.pmap(MapaEstabilidad4C,M)
+
+xestable=c[1][1]
+zestable=c[1][2]
+a₁=c[1][3]
+a₂=c[1][4]
+T=c[1][5]
+
+for j in 2:procesos
+    xestable=cat(1,xestable,c[j][1])
+    zestable=cat(1,zestable,c[j][2])
+    a₁=cat(2,a₁,c[j][3])
+    a₂=cat(2,a₂,c[j][4])
+    T=cat(1,T,c[j][5])
+end
+
+
+file=string("Est4C-Parale-Vern9.jld")
+save( file,"x",X,"z₀",v,"xestable",xestable,"zestable",zestable,"a1",a₁,"a2",a₂,"T",T)
 
 
 
