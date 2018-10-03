@@ -15,10 +15,13 @@
 #addprocs(procesos)
 
 ################  REQUERIMIENTOS ###############################################
+
 ################  OJO!!!  EL MODULO ProgressMeter ES UN FORK (VARIANTE) 
 ################  DEL OFICIAL. ESTA HECHO PARA MOSTRAR COMPUTOS EN
 ################  PARALELO. DIRECCIÓN WEB:
 ################  https://github.com/adamslc/ProgressMeter.jl
+################  Intalaciòn : Pkg.clone("https://github.com/adamslc/ProgressMeter.jl.git")
+
 ################################################################################
 
 @everywhere using DifferentialEquations, QuadGK, JLD, ProgressMeter
@@ -62,14 +65,14 @@ end
 
 
 xini=0.38
-#xfin=0.41
-xfin=.39
+xfin=0.41
 vini=15
-vfin=16
-#Δx=.0001
-Δx=.001
+vfin=40
+Δx=.0001
+#Δx=.001
 X=xini:Δx:xfin
-Δv=.1
+Δv=.01
+#Δv=.1
 v=vini:Δv:vfin
 N=length(X)
 NxProc=Int64(floor(N/procesos))
